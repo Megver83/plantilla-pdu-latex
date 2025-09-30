@@ -1,0 +1,288 @@
+\setlength{\parindent}{0pt} % Quita sangrías de todos los párrafos
+\setlength{\parskip}{0.5em} % Opcional: agrega espacio entre párrafos
+
+
+
+% =====================================
+% FRANJA AZUL - BORDE IZQUIEDO
+% =====================================
+\definecolor{UoDBlue}{RGB}{0,46,92}
+\AtBeginShipout{%
+  \AtBeginShipoutUpperLeft{%
+    \begin{tikzpicture}[remember picture, overlay]
+      % Franja vertical izquierda
+      \fill[UoDBlue] (current page.north west) rectangle ([xshift=0.5cm]current page.south west);
+      
+      % Logo en esquina superior derecha (opcional)
+      \node[anchor=north east] at (current page.north east)
+      {\includegraphics[width=2.5cm]{images/logo vicerrectoria.png}};
+    \end{tikzpicture}%
+  }%
+}
+
+
+% =====================================
+% COMANDOS PARA LA SECCIÓN RESULTADOS
+% =====================================
+\newcommand{\ObjEspProcess}[1]{#1}
+
+% ---- Definición de tipos de columnas para simplificar ----
+\newcolumntype{J}[1]{>{\justifying\setlength{\parindent}{0pt}\arraybackslash}m{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+
+% ---- Comando para generar fila de indicador ----
+\newcommand{\FilaIndicador}[5]{%
+  #1 & #2 &%
+  \ifstrempty{#3}{N/A}{
+    \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#3*100}}{\percent}}{\num{#3}}%
+  }%
+  &
+  \ifstrempty{#4}{N/A}{
+    \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#4*100}}{\percent}}{\num{#4}}%
+  }%
+  \\ \hline
+}
+% \newcommand{\FilaIndicador}[5]{%
+%   #1 & #2 & #3 & #4 \\ \hline
+% }
+
+\newcommand{\FilaSubIndicador}[5]{%
+  \rowcolor{black!7}
+  % Primera columna con borde izquierdo grueso y borde derecho fino (entre primera y segunda columna)
+  \multicolumn{1}{!{\color{gray!40}\vrule width 10pt}>{\hspace{0.01mm}\color{black!60}}l!{\color{black!90}\vrule width 0.5pt}}{#1}
+  % Segunda columna
+  & \color{black!60}#2
+  % Tercera columna
+  &
+  {
+    \color{black!60}
+    \ifstrempty{#3}{N/A}{
+      \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#3*100}}{\percent}}{\num{#3}}%
+    }
+  }
+  % Cuarta columna
+  &
+  {
+    \color{black!60}
+    \ifstrempty{#4}{N/A}{
+      \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#4*100}}{\percent}}{\num{#4}}%
+    }
+  }
+  \\ \hline
+}
+
+% ---- Cabecera estándar de las tablas ----
+\newcommand{\CabeceraTabla}{%
+  \rowcolor{UoDBlue}
+  \textcolor{white}{\textbf{Indicador}} & 
+  \textcolor{white}{\textbf{Descripción}} & 
+  \textcolor{white}{\textbf{Medición}} & 
+  \textcolor{white}{\textbf{Meta}} \\
+  \hline
+}
+
+% ---- Entorno para tabla de objetivos con letra ligeramente más pequeña ----
+\newenvironment{tablaObjetivos}{%
+  \begin{center}
+  \footnotesize % <-- tamaño intermedio, más legible que \scriptsize
+  \rowcolors{2}{gray!10}{white}
+  \begin{tabular}{|J{6cm}|J{6cm}|C{1.8cm}|C{1cm}|}
+  \hline
+  \CabeceraTabla
+}{%
+  \end{tabular}
+  \end{center}
+}
+
+
+\newcommand{\ObjEsp}[3]{%
+  \subsubsection*{%
+    \textcolor{UoDBlue}{\textbf{•  Objetivo específico #1:}} #2
+  }%
+  \vspace{-4mm} % <-- reduce el espacio entre el título y la tabla
+  \begin{tablaObjetivos}
+    #3
+  \end{tablaObjetivos}
+}
+% =====================================
+% OBJETIVO ESTRATÉGICO CON BORDE IZQUIERDO NARANJA (QUE PUEDE CORTAR PÁGINA)
+% =====================================
+
+
+\newmdenv[
+  linecolor=Naranja,         % color del borde
+  linewidth=2pt,             % grosor de la línea
+  topline=false,             % sin línea arriba
+  bottomline=false,          % sin línea abajo
+  rightline=false,           % sin línea derecha
+  leftline=true,             % línea solo izquierda
+  innertopmargin=5pt,        % espacio arriba
+  innerbottommargin=5pt,     % espacio abajo
+  innerleftmargin=8pt,       % espacio entre línea y texto
+  innerrightmargin=5pt,      % margen derecho interno
+  skipabove=10pt,            % espacio antes del bloque
+  skipbelow=10pt,            % espacio después del bloque
+  splittopskip=10pt,         % controla salto de página
+  splitbottomskip=10pt,      % controla salto de página
+  backgroundcolor=white,     % fondo blanco
+  frametitlebackgroundcolor=white
+]{objetivoBox}
+
+% ---- Macro unificada para objetivo estratégico ----
+% \newcommand{\ObjetivoEstrategico}[4]{%
+%   \begin{objetivoBox}
+%     % Espacio antes del título
+%     \vspace{2mm} % <-- ajusta el valor según prefieras
+%
+%     % Título + descripción
+%     \begin{minipage}[t]{0.75\textwidth}
+%       {\color{Naranja}\textbf{Objetivo Estratégico #1:}}\\[1mm]
+%       {\color{Naranja}\normalfont #2}
+%     \end{minipage}%
+%     \hfill
+%     \begin{minipage}[t]{0.22\textwidth}
+%       \vspace{0pt}
+%       \begin{center}
+%         \graficoCumplimientoChico{#3}
+%       \end{center}
+%     \end{minipage}
+%
+%     % Espacio antes de los objetivos específicos
+%     \vspace{-6mm}
+%
+%     % Procesar lista de objetivos específicos
+%     \forcsvlist{\ObjEspProcess}{#4}%
+%   \end{objetivoBox}
+% }
+
+\newcommand{\ObjetivoEstrategico}[4]{%
+  \begin{objetivoBox}
+    \vspace{2mm}
+
+    \ifstrempty{#3}{
+      {
+        \color{Naranja}\textbf{Objetivo Estratégico #1:}\\[1mm]
+        \color{Naranja}\normalfont #2
+      }
+    }{%
+      \begin{minipage}[t]{0.75\textwidth}
+        {\color{Naranja}\textbf{Objetivo Estratégico #1:}}\\[1mm]
+        {\color{Naranja}\normalfont #2}
+      \end{minipage}%
+      \hfill
+      \begin{minipage}[t]{0.22\textwidth}
+        \vspace{0pt}
+        \begin{center}
+          \graficoCumplimientoChico{#3}%
+        \end{center}
+      \end{minipage}
+    }%
+
+    \vspace{-6mm}
+
+    \forcsvlist{\ObjEspProcess}{#4}%
+  \end{objetivoBox}
+}
+
+% ============================
+% GRÁFICOS DE CUMPLIMIENTO
+% ============================
+% Gráfico cumplimiento objetivo estratégico
+% \newcommand{\graficoCumplimientoChico}[1]{%
+% \begin{tikzpicture}
+%   % Fondo gris
+%   \draw[gray!20, line width=6pt] (0,0) circle (1.2cm);
+%   % Calcular ángulo
+%   \pgfmathsetmacro{\angulo}{#1*360}
+%   % Progreso
+%   \draw[Naranja, line width=6pt] (90:1.2cm) arc (90:{90-\angulo}:1.2cm);
+%   % Texto dentro
+%   \node at (0,0.35) {\scriptsize Cumplimiento};
+% %   \node at (0,-0.1) {\textbf{#1\%}};
+%   \node at (0,-0.1) {\SI{\fpeval{#1*100}}{\percent}};
+% \end{tikzpicture}
+% }
+% Gráfico cumplimiento objetivo estratégico
+% Gráfico cumplimiento objetivo estratégico
+\newcommand{\graficoCumplimientoChico}[1]{%
+\begin{tikzpicture}
+  % Fondo gris
+  \draw[gray!20, line width=6pt] (0,0) circle (1.2cm);
+
+  % Calcular ángulo
+  \pgfmathsetmacro{\angulo}{#1*360}
+
+  % Determinar categoría numérica
+  \pgfmathsetmacro{\catNum}{ifthenelse(#1<0.6,0,ifthenelse(#1<0.8,1,2))}
+
+  % Asignar texto según categoría
+  \ifnum\catNum=0 \def\categoria{BAJO} \def\colorCategoria{red!90!black}\fi
+  \ifnum\catNum=1 \def\categoria{MEDIO} \def\colorCategoria{blue!80!black}\fi
+  \ifnum\catNum=2 \def\categoria{NORMAL} \def\colorCategoria{green!50!black}\fi
+
+  % Progreso con color
+  \draw[\colorCategoria, line width=6pt] (90:1.2cm) arc (90:{90-\angulo}:1.2cm);
+
+  % Texto dentro
+  \node at (0,0.35) {\scriptsize Cumplimiento};
+  \node at (0,-0.1) {\SI{\fpeval{#1*100}}{\percent}};
+
+  % Mostrar categoría debajo
+  \node at (0,-0.55) {\footnotesize \textbf{\categoria}};
+\end{tikzpicture}
+}
+
+% Gráfico sección cumplimiento general
+\newcommand{\graficoCumplimientoGeneral}[2]{%
+\begin{tikzpicture}
+  % Fondo gris
+  \draw[gray!20, line width=7.5pt] (0,0) circle (1.4cm); % radio intermedio
+  % Calcular ángulo
+  \pgfmathsetmacro{\angulo}{(#2/100)*360}
+  % Progreso
+  \draw[Naranja, line width=7.5pt] (90:1.4cm) arc (90:{90-\angulo}:1.4cm);
+  % Texto dentro
+  \node at (0,0.35) {\footnotesize OE #1};     % número variable
+  \node at (0,-0.2) {\Large\textbf{#2\%}};     % porcentaje más grande
+\end{tikzpicture}%
+}
+
+%=========================
+% CONCLUSIÓN OBJETIVO
+%=========================
+\newcommand{\ConclusionObj}[1]{%
+  \vspace{-7.5mm} % quita espacio extra antes de la conclusión
+  \begin{tcolorbox}[colback=blue!7, colframe=white,
+                    title=Conclusión, fonttitle=\bfseries,
+                    boxrule=0pt,
+                    sharp corners,
+                    width=\textwidth]
+    {\color{black!70} #1} % <-- aquí el texto más suave
+  \end{tcolorbox}%
+  \vspace{2mm} 
+}
+
+
+
+%===========================
+% TABLA FINAL, COMPARATIVA
+%===========================
+
+\newcommand{\FilaOE}[3]{#1 & #2 & #3 \\ \hline}
+
+% Tabla de Objetivos Estratégicos: #1 = Año 1, #2 = Año 2, #3 = filas
+\newcommand{\TablaObjetivosEstrategicos}[3]{%
+\begin{center}
+\footnotesize
+\rowcolors{2}{gray!10}{white}%
+\begin{tabular}{|J{12cm}|C{1.5cm}|C{1.5cm}|}
+\hline
+\rowcolor{UoDBlue}
+\textcolor{white}{\textbf{Objetivos Estratégicos}} &
+\textcolor{white}{\textbf{#1}} &
+\textcolor{white}{\textbf{#2}} \\
+\hline
+#3
+\end{tabular}
+\end{center}%
+}

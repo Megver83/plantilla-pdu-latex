@@ -1,0 +1,27 @@
+\section*{Contexto}
+
+\sectionline
+
+{{ contexto }}
+{% if contexto_unidad is defined %}
+
+{{ contexto_unidad }}
+{% endif %}
+
+\textbf{MISIÓN}
+
+{{ mision }}
+
+\textbf{VISIÓN}  
+
+{{ vision }}
+
+El cálculo del cumplimiento se corresponde con los parámetros institucionales de medición, donde cada indicador tiene una forma de cálculo descrita en el PDE 2025-2034, un responsable de reportar la información a nivel institucional y un sistema de registro. El cumplimiento del PDU se calcula de forma anual sobre un máximo de 100\%, en base a tres grupos de indicadores: el nivel 1 equivale a un 45\% del cumplimiento total del PDU, el nivel 2 a un 35\% y el nivel 3 a un 20\%.
+
+El cumplimiento del PDU se puede interpretar como la capacidad de alineamiento de las acciones de la organización frente a los propósitos definidos para el año en evaluación, en un rango de 0 a 100\% se identifican tres niveles:
+
+\begin{itemize}
+    \item Cumplimiento \textless 60\%: \textbf{BAJO}
+    \item Cumplimiento 60\% y \textless 80\%: \textbf{MEDIO}
+    \item Cumplimiento 80\%: \textbf{NORMAL - ACEPTABLE}
+\end{itemize}

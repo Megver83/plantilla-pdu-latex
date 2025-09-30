@@ -1,0 +1,109 @@
+\documentclass[12pt]{article}
+\usepackage[pdftitle={{ "{Reporte PDU %s - %s}" % (year, nombre) }},
+            pdfauthor={Vicerrectoría de Desarrollo Estratégico y Calidad},
+            pdfsubject={Plan de Desarrollo de Unidad},
+            pdfkeywords={PDU, PDE, planificación, informe, reporte},
+            pdfcreator={LaTeX},
+            pdfproducer={pdfTeX / latexmk}]{hyperref}
+\usepackage[a4paper,
+            top=1in,    % margen superior
+            bottom=0.75in, % margen inferior
+            left=0.8in,   % margen izquierdo
+            right=0.8in   % margen derecho
+           ]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{afterpage}
+\usepackage{sectsty}
+\usepackage{atbegshi} % Alternativa a eso-pic
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usetikzlibrary{shadows}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{fontspec}
+\usepackage{ragged2e}
+\usepackage[spanish]{babel}
+\usepackage{xfp}
+\usepackage{siunitx} % comandos \num y \SI
+% Redondea a dos decimales, si resulta en numero entero, elimina ceros decimales
+\sisetup{round-mode = places, round-precision = 2, exponent-mode = fixed, fixed-exponent = 0, zero-decimal-to-integer}
+{% raw %}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing}
+\subsubsectionfont{\normalfont}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing}
+
+\definecolor{UoDBlue}{RGB}{0, 46, 92} 
+\definecolor{UoDDarkBlue}{RGB}{0, 46, 92} 
+\definecolor{UoDLightBlue}{RGB}{209,226,242} 
+\definecolor{mint}{HTML}{2EC4B6}
+\definecolor{coral}{HTML}{FF6B6B}
+\definecolor{mustard}{HTML}{FFBE0B}
+\definecolor{Naranja}{RGB}{217,136,0}
+\definecolor{GrisOscuro}{HTML}{333333} 
+
+\setromanfont{BaxterSans}[ Path=./Baxter/, Extension = .otf, UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-RegularItalic, BoldItalicFont=*-BoldItalic ] 
+
+\sectionfont{\color{UoDBlue}} \subsectionfont{\color{UoDBlue}} 
+
+\usepackage{titlesec} 
+% Estilo de secciones sin numerar
+\titleformat{\section}[block]
+  {\normalfont\Huge\color{UoDBlue}}  % Muy grande, sin negrita, color azul
+  {}
+  {0pt}
+  {}
+
+% Ajustar espacio antes y después del título
+\titlespacing*{\section}{0pt}{10pt}{2pt} % {izq}{antes}{después}
+
+% Comando para línea punteada
+\newcommand{\sectionline}{%
+  \par\noindent
+  \tikz{\draw[UoDBlue, line width=0.8pt, dash pattern=on 3pt off 2pt] (0,0)--(\linewidth,0);}%
+  \par
+}
+
+\begin{document} 
+\color{GrisOscuro}
+\newgeometry{top=20mm, left=20mm, bottom=20mm} 
+\pagecolor{UoDDarkBlue}\afterpage{\nopagecolor}
+
+\noindent
+\makebox[\textwidth][s]{%
+    \hspace*{-0.5cm} % mueve el logo izquierdo hacia el borde
+    \includegraphics[width=7cm]{images/logoucn.png}%
+    \hfill
+    \includegraphics[width=6cm]{images/logo-acreditacion.png}%
+    \hspace*{-2cm} % mueve el logo derecho hacia el borde
+}
+
+\vspace*{3cm}
+{% endraw %}
+\begin{center}
+\fontsize{45}{50}\selectfont \textcolor{white}{\textbf{Plan de Desarrollo}}
+
+\fontsize{45}{50}\selectfont \textcolor{white}{\textbf{ {{ nombre }} }}
+
+\vspace{7mm}
+\fontsize{18}{22}\selectfont \textcolor{white}{\textbf{Evaluación año {{ year }} }}
+
+\vfill
+
+\fontsize{16}{22}\selectfont \textcolor{white}{\textbf{\today}}
+\end{center}
+
+\normalsize
+
+\thispagestyle{empty}
+
+% \end{center}
+\restoregeometry   
+\newpage
+
+\input{macros} 
+\include{contexto} 
+\include{objetivos} 
+%\include{cgeneral}
+
+\end{document}
