@@ -84,8 +84,7 @@
 % ---- Entorno para tabla de objetivos con letra ligeramente más pequeña ----
 \newenvironment{tablaObjetivos}{%
   \begin{center}
-  \footnotesize % <-- tamaño intermedio, más legible que \scriptsize
-  \rowcolors{2}{gray!10}{white}
+  \footnotesize
   \begin{tabular}{|J{6cm}|J{6cm}|C{1.8cm}|C{1cm}|}
   \hline
   \CabeceraTabla
@@ -93,7 +92,6 @@
   \end{tabular}
   \end{center}
 }
-
 
 \newcommand{\ObjEsp}[3]{%
   \subsubsection*{%
@@ -285,4 +283,23 @@
 #3
 \end{tabular}
 \end{center}%
+}
+
+\newcommand{\MisionVision}[2]{%
+  \begin{center}
+    \begin{minipage}[t]{0.48\textwidth}
+      \centering
+      \textbf{MISIÓN}
+      \begin{justify}
+        #1
+      \end{justify}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.48\textwidth}
+      \centering
+      \textbf{VISIÓN}
+      \begin{justify}
+        #2
+      \end{justify}
+    \end{minipage}
+  \end{center}
 }
