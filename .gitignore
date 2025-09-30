@@ -1,5 +1,7 @@
 *
 !Baxter/
+!Baxter/*
 !images/
+!images/*
 !*.template
 !macros.tex
