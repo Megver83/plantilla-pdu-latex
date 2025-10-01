@@ -26,8 +26,13 @@
 \usepackage[spanish]{babel}
 \usepackage{xfp}
 \usepackage{siunitx} % comandos \num y \SI
-% Redondea a dos decimales, si resulta en numero entero, elimina ceros decimales
-\sisetup{round-mode = places, round-precision = 2, exponent-mode = fixed, fixed-exponent = 0, zero-decimal-to-integer}
+\sisetup{round-mode = places,
+         round-precision = 2, % Redondea a dos decimales
+         exponent-mode = fixed,
+         fixed-exponent = 0, % Sin notación científica
+         zero-decimal-to-integer, % Elimina ceros decimales en enteros
+         output-decimal-marker = {,}, % Separador decimal como coma
+         detect-all} % Hereda la tipografía del entorno
 {% raw %}
 \usetikzlibrary{arrows.meta, decorations.pathreplacing}
 \subsubsectionfont{\normalfont}
