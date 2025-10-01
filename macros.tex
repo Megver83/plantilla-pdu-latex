@@ -42,9 +42,6 @@
   }%
   \\ \hline
 }
-% \newcommand{\FilaIndicador}[5]{%
-%   #1 & #2 & #3 & #4 \\ \hline
-% }
 
 \newcommand{\FilaSubIndicador}[5]{%
   \rowcolor{black!7}
@@ -127,32 +124,6 @@
 ]{objetivoBox}
 
 % ---- Macro unificada para objetivo estratégico ----
-% \newcommand{\ObjetivoEstrategico}[4]{%
-%   \begin{objetivoBox}
-%     % Espacio antes del título
-%     \vspace{2mm} % <-- ajusta el valor según prefieras
-%
-%     % Título + descripción
-%     \begin{minipage}[t]{0.75\textwidth}
-%       {\color{Naranja}\textbf{Objetivo Estratégico #1:}}\\[1mm]
-%       {\color{Naranja}\normalfont #2}
-%     \end{minipage}%
-%     \hfill
-%     \begin{minipage}[t]{0.22\textwidth}
-%       \vspace{0pt}
-%       \begin{center}
-%         \graficoCumplimientoChico{#3}
-%       \end{center}
-%     \end{minipage}
-%
-%     % Espacio antes de los objetivos específicos
-%     \vspace{-6mm}
-%
-%     % Procesar lista de objetivos específicos
-%     \forcsvlist{\ObjEspProcess}{#4}%
-%   \end{objetivoBox}
-% }
-
 \newcommand{\ObjetivoEstrategico}[4]{%
   \begin{objetivoBox}
     \vspace{2mm}
@@ -186,22 +157,6 @@
 % GRÁFICOS DE CUMPLIMIENTO
 % ============================
 % Gráfico cumplimiento objetivo estratégico
-% \newcommand{\graficoCumplimientoChico}[1]{%
-% \begin{tikzpicture}
-%   % Fondo gris
-%   \draw[gray!20, line width=6pt] (0,0) circle (1.2cm);
-%   % Calcular ángulo
-%   \pgfmathsetmacro{\angulo}{#1*360}
-%   % Progreso
-%   \draw[Naranja, line width=6pt] (90:1.2cm) arc (90:{90-\angulo}:1.2cm);
-%   % Texto dentro
-%   \node at (0,0.35) {\scriptsize Cumplimiento};
-% %   \node at (0,-0.1) {\textbf{#1\%}};
-%   \node at (0,-0.1) {\SI{\fpeval{#1*100}}{\percent}};
-% \end{tikzpicture}
-% }
-% Gráfico cumplimiento objetivo estratégico
-% Gráfico cumplimiento objetivo estratégico
 \newcommand{\graficoCumplimientoChico}[1]{%
 \begin{tikzpicture}
   % Fondo gris
@@ -215,7 +170,7 @@
 
   % Asignar texto según categoría
   \ifnum\catNum=0 \def\categoria{BAJO} \def\colorCategoria{red!90!black}\fi
-  \ifnum\catNum=1 \def\categoria{MEDIO} \def\colorCategoria{blue!80!black}\fi
+  \ifnum\catNum=1 \def\categoria{MEDIO} \def\colorCategoria{yellow!80!black}\fi
   \ifnum\catNum=2 \def\categoria{NORMAL} \def\colorCategoria{green!50!black}\fi
 
   % Progreso con color
