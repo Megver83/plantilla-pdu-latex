@@ -17,7 +17,6 @@
 \usepackage{afterpage}
 \usepackage{sectsty}
 \usepackage{atbegshi} % Alternativa a eso-pic
-\usepackage{tikz}
 \usepackage[most]{tcolorbox}
 \usetikzlibrary{shadows}
 \usepackage[framemethod=TikZ]{mdframed}
@@ -35,15 +34,9 @@
          detect-all} % Hereda la tipografía del entorno
 {% raw %}
 \usetikzlibrary{arrows.meta, decorations.pathreplacing}
-\subsubsectionfont{\normalfont}
-\usetikzlibrary{arrows.meta, decorations.pathreplacing}
 
 \definecolor{UoDBlue}{RGB}{0, 46, 92} 
 \definecolor{UoDDarkBlue}{RGB}{0, 46, 92} 
-\definecolor{UoDLightBlue}{RGB}{209,226,242} 
-\definecolor{mint}{HTML}{2EC4B6}
-\definecolor{coral}{HTML}{FF6B6B}
-\definecolor{mustard}{HTML}{FFBE0B}
 \definecolor{Naranja}{RGB}{217,136,0}
 \definecolor{GrisOscuro}{HTML}{333333} 
 
@@ -109,6 +102,5 @@
 \input{macros} 
 \include{contexto} 
 \include{objetivos} 
-%\include{cgeneral}
 
 \end{document}
