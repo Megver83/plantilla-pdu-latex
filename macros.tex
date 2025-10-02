@@ -1,18 +1,46 @@
 \setlength{\parindent}{0pt} % Quita sangrías de todos los párrafos
 \setlength{\parskip}{0.5em} % Opcional: agrega espacio entre párrafos
 
+% Estilo de secciones sin numerar
+\titleformat{\section}[block]
+  {\normalfont\Huge\color{UoDBlue}}  % Muy grande, sin negrita, color azul
+  {}
+  {0pt}
+  {}
 
+% Comando para línea punteada
+\newcommand{\sectionline}{%
+  \par\noindent
+  \tikz{\draw[UoDBlue, line width=0.8pt, dash pattern=on 3pt off 2pt] (0,0)--(\linewidth,0);}%
+  \par
+}
+
+% =====================================
+% CONFIGURACIÓN DE SIUNITX
+% =====================================
+\sisetup{round-mode = places,
+         round-precision = 2, % Redondea a dos decimales
+         exponent-mode = fixed,
+         fixed-exponent = 0,
+         zero-decimal-to-integer, % Elimina ceros decimales en enteros
+         output-decimal-marker = {,}, % separador decimal como coma
+         detect-all} % hereda la tipografía del entorno
+
+% =====================================
+% BIBLIOTECAS DE TIKZ
+% =====================================
+\usetikzlibrary{shadows}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing}
 
 % =====================================
 % FRANJA AZUL - BORDE IZQUIEDO
 % =====================================
-\definecolor{UoDBlue}{RGB}{0,46,92}
 \AtBeginShipout{%
   \AtBeginShipoutUpperLeft{%
     \begin{tikzpicture}[remember picture, overlay]
       % Franja vertical izquierda
       \fill[UoDBlue] (current page.north west) rectangle ([xshift=0.5cm]current page.south west);
-      
+
       % Logo en esquina superior derecha (opcional)
       \node[anchor=north east] at (current page.north east)
       {\includegraphics[width=2.5cm]{images/logo-vicerrectoria.png}};
@@ -69,9 +97,9 @@
 % ---- Cabecera estándar de las tablas ----
 \newcommand{\CabeceraTabla}{%
   \rowcolor{UoDBlue}
-  \textcolor{white}{\textbf{Indicador}} & 
-  \textcolor{white}{\textbf{Descripción}} & 
-  \textcolor{white}{\textbf{Medición}} & 
+  \textcolor{white}{\textbf{Indicador}} &
+  \textcolor{white}{\textbf{Descripción}} &
+  \textcolor{white}{\textbf{Medición}} &
   \textcolor{white}{\textbf{Meta}} \\
   \hline
 }
@@ -213,7 +241,7 @@
                     width=\textwidth]
     {\color{black!70} #1} % <-- aquí el texto más suave
   \end{tcolorbox}%
-  \vspace{2mm} 
+  \vspace{2mm}
 }
 
 
