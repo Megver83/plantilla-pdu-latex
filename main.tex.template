@@ -69,7 +69,11 @@
 \restoregeometry   
 \newpage
 
-\input{macros} 
+% Página del í­ndice
+\tableofcontents
+\newpage
+
+\input{macros}
 \include{contexto} 
 \include{objetivos} 
 
