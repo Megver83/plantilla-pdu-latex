@@ -5,3 +5,4 @@
 !images/*
 !*.template
 !macros.tex
+!.gitlab-ci.yml
