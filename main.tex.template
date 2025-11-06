@@ -1,80 +1,148 @@
-\documentclass[12pt]{article}
-\usepackage[pdftitle={{ "{Reporte PDU %s - %s}" % (year, nombre) }},
+\documentclass[11pt]{article}
+
+% -------------------------
+% PAQUETES Y CONFIGURACIÓN
+% -------------------------
+
+% --- PDF metadata ---
+\usepackage[pdftitle={Reporte PDU 2025 - Escuela de Ingeniería Coquimbo},
             pdfauthor={Vicerrectoría de Desarrollo Estratégico y Calidad},
             pdfsubject={Plan de Desarrollo de Unidad},
             pdfkeywords={PDU, PDE, planificación, informe, reporte},
             pdfcreator={LaTeX},
-            pdfproducer={pdfTeX / latexmk}]{hyperref}
-\usepackage[a4paper,
-            top=1in,    % margen superior
-            bottom=0.75in, % margen inferior
-            left=0.8in,   % margen izquierdo
-            right=0.8in   % margen derecho
-           ]{geometry}
-\usepackage{graphicx}
-\usepackage{hyperref}
+            pdfproducer={pdfTeX / latexmk},
+            hidelinks]{hyperref}
+
+% --- Márgenes y geometría ---
+\usepackage[a4paper, top=20mm, bottom=20mm, left=20mm, right=20mm]{geometry}
+
+% --- Tipografía e idioma ---
+\usepackage{fontspec}           % para usar fuentes OpenType
+\setromanfont{BaxterSans}[ Path=./Baxter/, Extension = .otf,
+                            UprightFont=*-Regular, BoldFont=*-Bold,
+                            ItalicFont=*-RegularItalic, BoldItalicFont=*-BoldItalic ]
+\usepackage[spanish]{babel}
+\usepackage{ragged2e}           % justify / flush commands
+
+% --- Colores y gráficos ---
+\usepackage{graphicx}           % imágenes
+\usepackage{tikz}               % gráficos vectoriales
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shadows, arrows.meta, decorations.pathreplacing}
 \usepackage[table,dvipsnames]{xcolor}
-\usepackage{afterpage}
-\usepackage{sectsty}
-\usepackage{atbegshi} % Alternativa a eso-pic
+% --- Cajas y secciones ---
 \usepackage[most]{tcolorbox}
 \usepackage[framemethod=TikZ]{mdframed}
-\usepackage{fontspec}
-\usepackage{ragged2e}
-\usepackage[spanish]{babel}
-\usepackage{xfp}
-\usepackage{siunitx} % comandos \num y \SI
 \usepackage{titlesec}
+% --- Estilo de tablas ---
+\setlength{\arrayrulewidth}{0.8pt} % grosor de líneas en tablas
+
+% --- Cálculos y números ---
+\usepackage{xfp}
+\usepackage{siunitx}
+\usepackage{xstring}
+\usetikzlibrary{shadows, arrows.meta, decorations.pathreplacing}
+
+% --- Control de página y overlays ---
+\usepackage{afterpage}          % para control de color de página
+\usepackage{atbegshi}           % para overlays (logos, franjas)
+
+% ESTILO Y CONFIGURACIÓN GENERAL
+
+\setlength{\arrayrulewidth}{0.8pt} % grosor de todas las líneas
+
+% Sin sangría y espacio entre párrafos
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\usepackage{titlesec}
+
+% Subsubsecciones normales, color predeterminado (negro)
+\titleformat{\subsubsection}[block]
+  {\normalfont}        % fuente normal, tamaño predeterminado
+  {\thesubsubsection}  % numeración
+  {0.5em}              % separación entre número y título
+  {}                   % antes del título
+
+
+% Estilo de secciones principales
+\titleformat{\section}[block]
+  {\normalfont\Huge\color{azulUCN}}  % Muy grande, color azul
+  {}
+  {0pt}
+  {}
+
+% --- Colores personalizados ---
+\definecolor{azulUCN}{RGB}{0, 46, 92}
+\definecolor{naranjaUCN}{RGB}{217,136,0}
+\definecolor{verdeUCN}{RGB}{181,239,113}
+\definecolor{rojoUCN}{RGB}{187,98,37}
+\definecolor{celesteUCN}{RGB}{124,155,192}
+
+\definecolor{rojoPastel}{RGB}{255,199,206}       % BAJO
+\definecolor{amarilloPastel}{RGB}{255,255,204}  % MEDIO
+\definecolor{verdePastel}{RGB}{198,239,206}     % SATISFACTORIO
+\definecolor{azulPastel}{RGB}{198,239,206}      % SOBRESALIENTE
+
+
+
+
+% -------------------------
+% INICIO DOCUMENTO
+% -------------------------
+\begin{document}
+
+% -------------------------
+% PORTADA
+% -------------------------
+\begin{titlepage}
+\pagecolor{azulUCN}\afterpage{\nopagecolor}
 {% raw %}
-\definecolor{UoDBlue}{RGB}{0, 46, 92}
-\definecolor{UoDDarkBlue}{RGB}{0, 46, 92}
-\definecolor{Naranja}{RGB}{217,136,0}
-\definecolor{GrisOscuro}{HTML}{333333}
-
-\setromanfont{BaxterSans}[ Path=./Baxter/, Extension = .otf, UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-RegularItalic, BoldItalicFont=*-BoldItalic ]
-
-\begin{document} 
-\color{GrisOscuro}
-\newgeometry{top=20mm, left=20mm, bottom=20mm} 
-\pagecolor{UoDDarkBlue}\afterpage{\nopagecolor}
-
 \noindent
 \makebox[\textwidth][s]{%
-    \hspace*{-0.5cm} % mueve el logo izquierdo hacia el borde
+    \hspace*{-0.5cm}
     \includegraphics[width=7cm]{images/logoucn.png}%
     \hfill
     \includegraphics[width=6cm]{images/logo-acreditacion.png}%
-    \hspace*{-2cm} % mueve el logo derecho hacia el borde
+    \hspace*{-1cm}
 }
-
-\vspace*{3cm}
 {% endraw %}
-\begin{center}
-\fontsize{45}{50}\selectfont \textcolor{white}{\textbf{Plan de Desarrollo}}
+\vspace*{6cm}
 
-\fontsize{45}{50}\selectfont \textcolor{white}{\textbf{ {{ nombre }} }}
-
-\vspace{7mm}
-\fontsize{18}{22}\selectfont \textcolor{white}{\textbf{Evaluación año {{ year }} }}
+\begin{flushleft}
+\fontsize{44.2}{32}\selectfont \textcolor{white}{\textbf{PLAN DE DESARROLLO}} \\[5mm]
+\fontsize{44.2}{32}\selectfont \textcolor{white}{\textbf{DE UNIDAD}} \\[2mm]
+\fontsize{32}{36}\selectfont \textcolor{verdeUCN}{\textbf{ {{ nombre }} }} \\[6mm]
+\fontsize{18}{22}\selectfont \textcolor{white}{Evaluación año {{ year }} }
+\end{flushleft}
 
 \vfill
 
-\fontsize{16}{22}\selectfont \textcolor{white}{\textbf{\today}}
+\begin{center}
+\fontsize{16}{20}\selectfont \textcolor{white}{\today}
 \end{center}
 
 \normalsize
-
 \thispagestyle{empty}
+\end{titlepage}
 
-\restoregeometry   
-\newpage
 
-% Página del í­ndice
+\input{macros}
+
+% -------------------------
+% CUERPO DEL DOCUMENTO
+% -------------------------
+
+% PAGINA ÍNDICE
 \tableofcontents
 \newpage
 
-\input{macros}
-\include{contexto} 
-\include{objetivos} 
+% CONTEXTO, CUMPLIMIENTO Y CONCLUSIÓN
+\include{contexto}
+\include{objetivos}
+\include{resumen}
+\include{conclusion}
+\include{anexo}
 
 \end{document}

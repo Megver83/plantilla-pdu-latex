@@ -1,19 +1,8 @@
-\subsubsectionfont{\normalfont}
-\setlength{\parindent}{0pt} % Quita sangrías de todos los párrafos
-\setlength{\parskip}{0.5em} % Opcional: agrega espacio entre párrafos
-
-% Estilo de secciones sin numerar
-\titleformat{\section}[block]
-  {\normalfont\Huge\color{UoDBlue}}  % Muy grande, sin negrita, color azul
-  {}
-  {0pt}
-  {}
-
 % Comando para línea punteada
 \newcommand{\sectionline}{%
-  \par\noindent
-  \tikz{\draw[UoDBlue, line width=0.8pt, dash pattern=on 3pt off 2pt] (0,0)--(\linewidth,0);}%
-  \par
+ \vspace{-8pt}
+  \tikz{\draw[azulUCN, line width=0.8pt, dash pattern=on 3pt off 2pt] (0,0)--(\linewidth,0); }%
+  \vspace{8pt}
 }
 
 % =====================================
@@ -40,64 +29,44 @@
   \AtBeginShipoutUpperLeft{%
     \begin{tikzpicture}[remember picture, overlay]
       % Franja vertical izquierda
-      \fill[UoDBlue] (current page.north west) rectangle ([xshift=0.5cm]current page.south west);
+      \fill[azulUCN] (current page.north west) rectangle ([xshift=0.5cm]current page.south west);
 
       % Logo en esquina superior derecha (opcional)
       \node[anchor=north east] at (current page.north east)
-      {\includegraphics[width=2.5cm]{images/logo-vicerrectoria.png}};
+      {\includegraphics[width=2.3cm]{images/logo-vicerrectoria.png}};
     \end{tikzpicture}%
   }%
 }
 
-
 % =====================================
 % COMANDOS PARA LA SECCIÓN RESULTADOS
 % =====================================
+
 % ---- Definición de tipos de columnas para simplificar ----
 \newcolumntype{J}[1]{>{\justifying\setlength{\parindent}{0pt}\arraybackslash}m{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 
 % ---- Comando para generar fila de indicador ----
 \newcommand{\FilaIndicador}[5]{%
-  #1 & #2 &%
-  \ifstrempty{#3}{N/A}{
-    \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#3*100}}{\percent}}{\num{#3}}%
-  }%
-  &
-  \ifstrempty{#4}{N/A}{
-    \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#4*100}}{\percent}}{\num{#4}}%
-  }%
+  #1 & #2 &
+  \MostrarValor{#3}{#5} &
+  \MostrarValor{#4}{#5}%
   \\ \hline
 }
 
+% ---- Comando para generar fila de subindicador ----
 \newcommand{\FilaSubIndicador}[5]{%
   \rowcolor{black!7}
-  % Primera columna con borde izquierdo grueso y borde derecho fino (entre primera y segunda columna)
-  \multicolumn{1}{!{\color{gray!40}\vrule width 10pt}>{\hspace{0.01mm}}l!{\color{black!90}\vrule width 0.5pt}}{#1}
-  % Segunda columna
-  & #2
-  % Tercera columna
-  &
-  {
-
-    \ifstrempty{#3}{N/A}{
-      \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#3*100}}{\percent}}{\num{#3}}%
-    }
-  }
-  % Cuarta columna
-  &
-  {
-
-    \ifstrempty{#4}{N/A}{
-      \ifstrequal{#5}{porcentaje}{\SI{\fpeval{#4*100}}{\percent}}{\num{#4}}%
-    }
-  }
-  \\ \hline
+  \multicolumn{1}{!{\color{gray!40}\vrule width 10pt}>{\hspace{0.01mm}}l!{\color{black}\vrule width 0.8pt}}{#1} &
+  #2 &
+  \MostrarValor{#3}{#5} &
+  \MostrarValor{#4}{#5}%
+  \\ \arrayrulecolor{black}\hline
 }
 
 % ---- Cabecera estándar de las tablas ----
 \newcommand{\CabeceraTabla}{%
-  \rowcolor{UoDBlue}
+  \rowcolor{azulUCN}
   \textcolor{white}{\textbf{Indicador}} &
   \textcolor{white}{\textbf{Descripción}} &
   \textcolor{white}{\textbf{Medición}} &
@@ -105,7 +74,7 @@
   \hline
 }
 
-% ---- Entorno para tabla de objetivos con letra ligeramente más pequeña ----
+% ---- Entorno para tabla de objetivos ----
 \newenvironment{tablaObjetivos}{%
   \begin{center}
   \footnotesize
@@ -117,56 +86,63 @@
   \end{center}
 }
 
+% ---- Comando para Objetivo Específico ----
 \newcommand{\ObjEsp}[3]{%
   \subsubsection*{%
-    \textcolor{UoDBlue}{\textbf{•  Objetivo específico #1:}} #2
-    \addcontentsline{toc}{subsubsection}{Objetivo específico #1}
+    \textcolor{azulUCN}{\textbf{•  Objetivo Específico #1:}} #2
+    \addcontentsline{toc}{subsubsection}{Objetivo Específico #1}
   }%
-  \vspace{-4mm} % <-- reduce el espacio entre el título y la tabla
+  \vspace{-4mm} % reduce el espacio entre el título y la tabla
   \begin{tablaObjetivos}
     #3
   \end{tablaObjetivos}
 }
-% =====================================
-% OBJETIVO ESTRATÉGICO CON BORDE IZQUIERDO NARANJA (QUE PUEDE CORTAR PÁGINA)
-% =====================================
 
-
+% =====================================
+% OBJETIVO ESTRATÉGICO 
+% =====================================
 \newmdenv[
-  linecolor=Naranja,         % color del borde
-  linewidth=2pt,             % grosor de la línea
-  topline=false,             % sin línea arriba
-  bottomline=false,          % sin línea abajo
-  rightline=false,           % sin línea derecha
-  leftline=true,             % línea solo izquierda
-  innertopmargin=5pt,        % espacio arriba
-  innerbottommargin=5pt,     % espacio abajo
-  innerleftmargin=8pt,       % espacio entre línea y texto
-  innerrightmargin=5pt,      % margen derecho interno
-  skipabove=10pt,            % espacio antes del bloque
-  skipbelow=10pt,            % espacio después del bloque
-  splittopskip=10pt,         % controla salto de página
-  splitbottomskip=10pt,      % controla salto de página
-  backgroundcolor=white,     % fondo blanco
-  frametitlebackgroundcolor=white
+  linecolor=naranjaUCN,
+  linewidth=2pt,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  leftline=true,
+  innertopmargin=5pt,
+  innerbottommargin=5pt,
+  innerleftmargin=8pt,
+  innerrightmargin=5pt,
+  skipabove=10pt,
+  skipbelow=10pt,
+  backgroundcolor=white
 ]{objetivoBox}
 
-% ---- Macro unificada para objetivo estratégico ----
-\newcommand{\ObjetivoEstrategico}[4]{%
+% =====================================
+% COMANDO PARA ÁREA DE DESARROLLO
+% =====================================
+\newcommand{\AreaDesarrollo}[2]{%
+  \vspace{6mm}
+  {\LARGE \textcolor{rojoUCN}{\textbf{#1}}}%
+  \vspace{1mm}
+  \addcontentsline{toc}{subsection}{#1} 
+  #2
+}
+
+% ---- Macro unificada para objetivo estratégico (ahora con conclusión) ----
+\newcommand{\ObjetivoEstrategico}[5]{%
   \begin{objetivoBox}
     \vspace{2mm}
-
-    \ifstrempty{#3}{
-      {
-        \color{Naranja}\textbf{Objetivo Estratégico #1:}\\[1mm]
+    \ifstrempty{#3}{%
+      {%
+        \color{naranjaUCN}\textbf{Objetivo Estratégico #1:}\\[1mm]
         \addcontentsline{toc}{subsection}{Objetivo Estratégico #1}
-        \color{Naranja}\normalfont #2
-      }
+        \color{naranjaUCN}\normalfont #2
+      }%
     }{%
-      \begin{minipage}[t]{0.75\textwidth}
-        {\color{Naranja}\textbf{Objetivo Estratégico #1:}}\\[1mm]
+      \begin{minipage}[t]{0.8\textwidth}
+        {\color{naranjaUCN}\textbf{Objetivo Estratégico #1:}}\\[1mm]
         \addcontentsline{toc}{subsection}{Objetivo Estratégico #1}
-        {\color{Naranja}\normalfont #2}
+        {\color{naranjaUCN}\normalfont #2}
       \end{minipage}%
       \hfill
       \begin{minipage}[t]{0.22\textwidth}
@@ -176,100 +152,57 @@
         \end{center}
       \end{minipage}
     }%
-
     \vspace{-6mm}
-
     #4
+    \ifstrempty{#5}{}{%
+      \vspace{-2mm}
+      \begin{tcolorbox}[colback=blue!7, colframe=white,
+                        title=Conclusión, fonttitle=\bfseries,
+                        boxrule=0pt,
+                        sharp corners,
+                        width=\textwidth]
+        {\color{black!70} \textbf{Análisis}:#5}
+        \addcontentsline{toc}{subsubsection}{Análisis}
+      \end{tcolorbox}
+    }
   \end{objetivoBox}
 }
 
 % ============================
 % GRÁFICOS DE CUMPLIMIENTO
 % ============================
-% Gráfico cumplimiento objetivo estratégico
 \newcommand{\graficoCumplimientoChico}[1]{%
 \begin{tikzpicture}
-  % Fondo gris
-  \draw[gray!20, line width=6pt] (0,0) circle (1.2cm);
-
-  % Calcular ángulo
-  \pgfmathsetmacro{\angulo}{#1*360}
-
-  % Determinar categoría numérica
-  \pgfmathsetmacro{\catNum}{ifthenelse(#1<0.6,0,ifthenelse(#1<0.8,1,2))}
-
-  % Asignar texto según categoría
-  \ifnum\catNum=0 \def\categoria{BAJO} \def\colorCategoria{red!90!black}\fi
-  \ifnum\catNum=1 \def\categoria{MEDIO} \def\colorCategoria{yellow!80!black}\fi
-  \ifnum\catNum=2 \def\categoria{ÓPTIMO} \def\colorCategoria{green!50!black}\fi
-
-  % Progreso con color
-  \draw[\colorCategoria, line width=6pt] (90:1.2cm) arc (90:{90-\angulo}:1.2cm);
-
-  % Texto dentro
-  \node at (0,0.35) {\scriptsize Cumplimiento};
-  \node at (0,-0.1) {\SI{\fpeval{#1*100}}{\percent}};
-
-  % Mostrar categoría debajo
-  \node at (0,-0.55) {\footnotesize \textbf{\categoria}};
-\end{tikzpicture}
-}
-
-% Gráfico sección cumplimiento general
-\newcommand{\graficoCumplimientoGeneral}[2]{%
-\begin{tikzpicture}
-  % Fondo gris
-  \draw[gray!20, line width=7.5pt] (0,0) circle (1.4cm); % radio intermedio
-  % Calcular ángulo
-  \pgfmathsetmacro{\angulo}{(#2/100)*360}
-  % Progreso
-  \draw[Naranja, line width=7.5pt] (90:1.4cm) arc (90:{90-\angulo}:1.4cm);
-  % Texto dentro
-  \node at (0,0.35) {\footnotesize OE #1};     % número variable
-  \node at (0,-0.2) {\Large\textbf{#2\%}};     % porcentaje más grande
+  \def\radio{1.1cm}
+  \pgfmathparse{
+    ifthenelse(#1<0.6,"BAJO",
+      ifthenelse(#1<0.8,"MEDIO",
+        ifthenelse(#1<0.95,"SATISFACTORIO","SOBRESALIENTE")
+      )
+    )
+  }
+  \let\categoria\pgfmathresult
+  \pgfmathparse{
+    ifthenelse(#1<0.6,"red!60!black",
+      ifthenelse(#1<0.8,"yellow!80!black",
+        ifthenelse(#1<0.95,"green!50!black","blue!60!black")
+      )
+    )
+  }
+  \let\colorCategoria\pgfmathresult
+  \draw[gray!20, line width=6pt] (0,0) circle (\radio);
+  \draw[\colorCategoria, line width=6pt] (90:\radio) arc (90:{90-(#1*360)}:\radio);
+  \node at (0,0) [align=center] {
+    \scriptsize Cumplimiento\\
+    \SI{\fpeval{#1*100}}{\percent}
+  };
+  \node[below=0.4em] at (0,-\radio) {\scriptsize \textbf{\categoria}};
 \end{tikzpicture}%
 }
 
-%=========================
-% CONCLUSIÓN OBJETIVO
-%=========================
-\newcommand{\ConclusionObj}[1]{%
-  \vspace{-7.5mm} % quita espacio extra antes de la conclusión
-  \begin{tcolorbox}[colback=blue!7, colframe=white,
-                    title=Conclusión, fonttitle=\bfseries,
-                    boxrule=0pt,
-                    sharp corners,
-                    width=\textwidth]
-    {\color{black!70} #1} % <-- aquí el texto más suave
-  \end{tcolorbox}%
-  \vspace{2mm}
-}
-
-
-
-%===========================
-% TABLA FINAL, COMPARATIVA
-%===========================
-
-\newcommand{\FilaOE}[3]{#1 & #2 & #3 \\ \hline}
-
-% Tabla de Objetivos Estratégicos: #1 = Año 1, #2 = Año 2, #3 = filas
-\newcommand{\TablaObjetivosEstrategicos}[3]{%
-\begin{center}
-\footnotesize
-\rowcolors{2}{gray!10}{white}%
-\begin{tabular}{|J{12cm}|C{1.5cm}|C{1.5cm}|}
-\hline
-\rowcolor{UoDBlue}
-\textcolor{white}{\textbf{Objetivos Estratégicos}} &
-\textcolor{white}{\textbf{#1}} &
-\textcolor{white}{\textbf{#2}} \\
-\hline
-#3
-\end{tabular}
-\end{center}%
-}
-
+% ======================
+% MISIÓN Y VISIÓN
+% ======================
 \newcommand{\MisionVision}[2]{%
   \begin{center}
     \begin{minipage}[t]{0.48\textwidth}
@@ -286,5 +219,182 @@
         #2
       \end{justify}
     \end{minipage}
+  \end{center}
+}
+
+% =========================================
+% GRÁFICO Y TABLA RESUMEN INDICADORES (PÁG RESUMEN)
+% =========================================
+\newcommand{\GraficoCumplimiento}[5]{%
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+  \pgfmathsetmacro{\vA}{min(100,#1*100)}
+  \pgfmathsetmacro{\vB}{min(100,#2*100)}
+  \pgfmathsetmacro{\vC}{min(100,#3*100)}
+  \pgfmathsetmacro{\vD}{min(100,#4*100)}
+  \pgfmathsetmacro{\vE}{min(100,#5*100)}
+  \begin{axis}[
+    ybar,
+    width=16cm,
+    height=4cm,
+    bar width=45pt,
+    title={\textbf{\% Cumplimiento por Área de Desarrollo}},
+    title style={yshift=12pt, font=\small},
+    symbolic x coords={
+      {Identidad y\\Vida Universitaria},
+      {Formación a lo\\Largo de la Vida},
+      {Investigación,\\Tecnología e\\Innovación},
+      {Vinculación con\\el Medio},
+      {Dirección\\Estratégica}
+    },
+    xtick=data,
+    ymin=0,
+    ymax=100,
+    axis y line=none,
+    axis x line=bottom,
+    axis line style={-},
+    enlarge x limits=0.1,
+    grid=none,
+    nodes near coords={
+        \pgfmathprintnumber[fixed,precision=2]{\pgfplotspointmeta}\%
+    },
+    every node near coord/.append style={
+        font=\footnotesize,
+        above,
+        yshift=2pt
+    },
+    x tick label style={
+        align=center,
+        font=\footnotesize
+    },
+    axis on top
+  ]
+    \addplot[fill=naranjaUCN!80] coordinates {
+      ({Identidad y\\Vida Universitaria},\vA)
+      ({Formación a lo\\Largo de la Vida},\vB)
+      ({Investigación,\\Tecnología e\\Innovación},\vC)
+      ({Vinculación con\\el Medio},\vD)
+      ({Dirección\\Estratégica},\vE)
+    };
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+}
+
+% ---- Comando para mostrar valor o porcentaje ----
+\newcommand{\MostrarValor}[2]{%
+  \ifstrempty{#1}{%
+    N/A%
+  }{%
+    \ifstrequal{#2}{porcentaje}{%
+      \SI{\fpeval{#1*100}}{\percent}%
+    }{%
+      \num{#1}%
+    }%
+  }%
+}
+
+% ---- Cabecera de tabla ----
+\newcommand{\CabeceraIndicadores}{%
+  \rowcolor{azulUCN}
+  \textcolor{white}{\textbf{Indicador}} &
+  \textcolor{white}{\textbf{Medición}} &
+  \textcolor{white}{\textbf{Meta}} &
+  \textcolor{white}{\textbf{Cumplimiento}} &
+  \textcolor{white}{\textbf{Delta}} \\
+  \hline
+}
+
+% ---- Entorno tabla ----
+\newenvironment{TablaIndicadores}{%
+  \begin{center}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{|p{8cm}|c|c|c|c|}
+  \hline
+  \CabeceraIndicadores
+}{%
+  \end{tabular}
+  \end{center}
+}
+
+% ---- Comando para una fila ----
+\newcommand{\FilaTablaIndicadores}[4]{%
+  #1 &
+  \MostrarValor{#2}{#4} &
+  \MostrarValor{#3}{#4} &
+  \IfStrEq{#2}{}{}{%
+    \IfStrEq{#3}{}{}{%
+      \pgfmathsetmacro{\cumraw}{#2/#3}%
+      \pgfmathsetmacro{\cum}{min(\cumraw,1)}%
+      \ifdim \cum pt<0.6pt
+        \cellcolor{rojoPastel}\MostrarValor{\cum}{porcentaje}%
+      \else
+        \ifdim \cum pt<0.8pt
+          \cellcolor{amarilloPastel}\MostrarValor{\cum}{porcentaje}%
+        \else
+          \ifdim \cum pt<0.95pt
+            \cellcolor{verdePastel}\MostrarValor{\cum}{porcentaje}%
+          \else
+            \cellcolor{azulPastel}\MostrarValor{\cum}{porcentaje}%
+          \fi
+        \fi
+      \fi
+    }%
+  } &
+  \IfStrEq{#2}{}{}{%
+    \IfStrEq{#3}{}{}{%
+      \pgfmathsetmacro{\delta}{#2-#3}%
+      \MostrarValor{\delta}{#4}%
+    }%
+  }%
+  \\
+  \hline
+}
+
+% ---- Comando para el área ----
+\newcommand{\AreaIndicadores}[2]{%
+  \rowcolor{naranjaUCN!25}
+  \multicolumn{5}{|c|}{\textbf{Área de Desarrollo: #1}} \\
+  \hline
+  #2
+}
+
+% -------------------------
+% TABLA ANEXO
+% -------------------------
+\newcommand{\CabeceraTablaAnexo}{%
+  \rowcolor{azulUCN}
+  \textcolor{white}{\textbf{Nombre del indicador}} &
+  \textcolor{white}{\textbf{Forma de cálculo}} &
+  \textcolor{white}{\textbf{Ponderación}} &
+  \textcolor{white}{\textbf{Fuente de información}} &
+  \textcolor{white}{\textbf{Frecuencia de actualización}} \\
+  \hline
+}
+
+\newcommand{\FilaTablaAnexo}[5]{%
+  #1 & #2 & #3 & #4 & #5 \\ \hline
+}
+
+\newcommand{\ObjEstrategicoAnexo}[2]{%
+  \rowcolor{naranjaUCN!25}
+  \multicolumn{5}{|p{\dimexpr5\linewidth/5-2\tabcolsep}|}{%
+    \textbf{Objetivo Estratégico #1: #2}%
+  } \\
+  \hline
+}
+
+\newcommand{\TablaAnexo}[1]{%
+  \begin{center}
+  \scriptsize
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{|C{4cm}|C{6cm}|c|C{2cm}|C{2.25cm}|}
+  \hline
+  \CabeceraTablaAnexo
+  #1
+  \end{tabular}
   \end{center}
 }

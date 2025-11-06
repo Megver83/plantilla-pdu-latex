@@ -1,0 +1,15 @@
+\section{Anexo}
+
+\sectionline
+
+\TablaAnexo{
+{% for obj in objetivos %}  \ObjEstrategicoAnexo{{ "{%s}" % obj.numero }}{{ "{%s}" % obj.descripcion }}
+{% for esp in obj.objetivos_especificos %}{% for ind in esp.indicadores %}    \FilaTablaAnexo
+      {{ "{%s}" % ind.nombre }}
+      {{ "{%s}" % ind.descripcion }}
+      {{ "{%s}" % ind.peso }}
+      {{ "{%s}" % ind.fuente }}
+      {{ "{%s}" % ind.frecuencia }}
+      %{{ "{%s}" % ind.tipo }}
+{% endfor %}{% endfor %}{% endfor %}
+}

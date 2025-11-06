@@ -1,0 +1,12 @@
+\section{Resumen}
+
+\sectionline
+
+La tabla presenta los indicadores y sus respectivos niveles de cumplimiento, junto con el delta, que indica la brecha o superación respecto de la meta establecida.
+
+\begin{TablaIndicadores}
+{% for obj in objetivos %}\AreaIndicadores{{ "{%s}" % obj.area }}
+{% for esp in obj.objetivos_especificos %}{% for ind in esp.indicadores %}\FilaTablaIndicadores{{ "{%s}" % ind.nombre }}{{ "{%s}" % (ind.medicion if ind.medicion is not none else '') }}{{ "{%s}" % (ind.meta if ind.meta is not none else '') }}{{ "{%s}" % ind.tipo }}
+{% endfor %}{% endfor %}
+{% endfor %}
+\end{TablaIndicadores}

@@ -2,14 +2,14 @@
 
 \sectionline
 
-{% for obj in objetivos %}\ObjetivoEstrategico{{ "{%s}" % obj.numero }}{{ "{%s}" % obj.descripcion }}{{ "{%s}" % (obj.cumplimiento if obj.cumplimiento is not none else '') }}{
-  {% for esp in obj.objetivos_especificos %}\ObjEsp{{ "{%s.%s}" % (obj.numero, esp.numero) }}{{ "{%s}" % esp.descripcion }}{
-    {% for ind in esp.indicadores %}\FilaIndicador{{ "{%s}" % ind.nombre }}{{ "{%s}" % ind.descripcion }}{{ "{%s}" % (ind.medicion if ind.medicion is not none else '') }}{{ "{%s}" % (ind.meta if ind.meta is not none else '') }}{{ "{%s}" % ind.tipo }}
-    {% for clave, valor in ind.get('meta_especifica', {}).items() %}\FilaSubIndicador{{ "{%s}" % clave }}{Subindicador}{{ "{%s}" % (ind.get('medicion_especifica', {}).get(clave, '') if ind.get('medicion_especifica', {}).get(clave, '') is not none else '') }}{{ "{%s}" % (valor if valor is not none else '') }}{{ "{%s}" % ind.tipo }}
-    {% endfor %}{% endfor %}
-    }{% endfor %}
+{% for obj in objetivos %}\AreaDesarrollo{ {{ obj.area }} }{
+  \ObjetivoEstrategico{{ "{%s}" % obj.numero }}{{ "{%s}" % obj.descripcion }}{{ "{%s}" % (obj.cumplimiento if obj.cumplimiento is not none else '') }}{
+    {% for esp in obj.objetivos_especificos %}\ObjEsp{{ "{%s.%s}" % (obj.numero, esp.numero) }}{{ "{%s}" % esp.descripcion }}{
+      {% for ind in esp.indicadores %}\FilaIndicador{{ "{%s}" % ind.nombre }}{{ "{%s}" % ind.descripcion }}{{ "{%s}" % (ind.medicion if ind.medicion is not none else '') }}{{ "{%s}" % (ind.meta if ind.meta is not none else '') }}{{ "{%s}" % ind.tipo }}
+      {% for clave, valor in ind.get('meta_especifica', {}).items() %}\FilaSubIndicador{{ "{%s}" % clave }}{Subindicador}{{ "{%s}" % (ind.get('medicion_especifica', {}).get(clave, '') if ind.get('medicion_especifica', {}).get(clave, '') is not none else '') }}{{ "{%s}" % (valor if valor is not none else '') }}{{ "{%s}" % ind.tipo }}
+      {% endfor %}{% endfor %}
+      }{% endfor %}
+  }{{ "{%s}" % obj.feedback }}
 }
-
-\ConclusionObj{{ "{%s}" % obj.feedback }}
 
 {% endfor %}
