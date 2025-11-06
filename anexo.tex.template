@@ -10,6 +10,5 @@
       {{ "{%s}" % ind.peso }}
       {{ "{%s}" % ind.fuente }}
       {{ "{%s}" % ind.frecuencia }}
-      %{{ "{%s}" % ind.tipo }}
 {% endfor %}{% endfor %}{% endfor %}
 }

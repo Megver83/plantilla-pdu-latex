@@ -375,7 +375,7 @@
 }
 
 \newcommand{\FilaTablaAnexo}[5]{%
-  #1 & #2 & #3 & #4 & #5 \\ \hline
+  #1 & #2 & \SI{\fpeval{#3*100}}{\percent} & #4 & \capitalisewords{#5} \\ \hline
 }
 
 \newcommand{\ObjEstrategicoAnexo}[2]{%
