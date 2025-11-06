@@ -324,7 +324,7 @@
   #1 &
   \MostrarValor{#2}{#4} &
   \MostrarValor{#3}{#4} &
-  \IfStrEq{#2}{}{}{%
+  \IfStrEq{#2}{}{N/A}{%
     \IfStrEq{#3}{}{}{%
       \pgfmathsetmacro{\cumraw}{#2/#3}%
       \pgfmathsetmacro{\cum}{min(\cumraw,1)}%
@@ -343,7 +343,7 @@
       \fi
     }%
   } &
-  \IfStrEq{#2}{}{}{%
+  \IfStrEq{#2}{}{N/A}{%
     \IfStrEq{#3}{}{}{%
       \pgfmathsetmacro{\delta}{#2-#3}%
       \MostrarValor{\delta}{#4}%
